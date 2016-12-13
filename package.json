@@ -1,0 +1,14 @@
+{
+  "name": "281",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "ejs": "*",
+    "express": "3.2.6",
+    "nodejs-websocket": "^1.7.0",
+    "password-hash": "^1.2.2"
+  }
+}

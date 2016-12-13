@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel='stylesheet' href='/stylesheets/style.css' />
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+<title>Registration</title>
+<script src="http://code.jquery.com/jquery-1.7.min.js"></script>
+
+<script>
+$(function(){
+	 $('#register').on('submit', function(){  
+console.log("heyyyy");
+    $.ajax({ 
+          url: '/signed',
+          type: 'POST',
+          cache: false, 
+          data: { userid : $('#userid').val(),
+         		email : $('#email').val(),
+    		password : $('#pass').val() }, 
+          success: function(data){
+             alert('Success!')
+          }
+          , error: function(jqXHR, textStatus, err){
+              alert('text status '+textStatus+', err '+err)
+          }
+       })
+    });       
+});
+
+
+$(function(){
+	 $('#search').on('keyup', function(e){
+	   if(e.keyCode === 13) {
+	     var parameters = { search: $(this).val() };
+	       $.get( '/searching',parameters, function(data) {
+	       $('#results').html(data);
+	     });
+	    };
+	 });
+	});
+function storeData(){
+	if (typeof(Storage) !== "undefined") {
+    localStorage.setItem("userid",(document.getElementById('userid').value) );
+    localStorage.setItem("email",(document.getElementById('email').value) );
+	localStorage.setItem("Answer1",(document.getElementById('answer1').value) );
+    localStorage.setItem("Answer2",(document.getElementById('answer2').value));
+	localStorage.setItem("mobile",(document.getElementById('mobile').value) );
+	localStorage.setItem("address",(document.getElementById('address').value) );
+	localStorage.setItem("Interests",(document.getElementById('extraText').value) );
+} else {
+    document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+}
+
+}
+$(document).ready(function() {
+$('input[type=password]').keyup(function() {
+    var pass = $(this).val();
+	var userid= $('#userid').val();
+	//Password strength level indicator
+	if ( pass.match(/[A-Z]/) ) {
+    $('#passStrengthLevel').removeClass('level0').addClass('level1');
+	}
+
+	if ( pass.match(/[A-Z]/) && pass.match(/[a-z]/) ) {
+    $('#passStrengthLevel').removeClass('level1').addClass('level2');
+	}
+	
+	if ( pass.match(/[A-Z]/) && pass.match(/[a-z]/) && pass.match(/\d/) ) {
+    $('#passStrengthLevel').removeClass('level2').addClass('level3');
+	}
+	
+	if ( pass.match(/[A-Z]/) && pass.match(/[a-z]/) && pass.match(/\d/) && pass.match(/[._-]/) ) {
+    $('#passStrengthLevel').removeClass('level3').addClass('level4');
+	}
+	
+	//At-least one upper-case
+	if ( pass.match(/[A-Z]/) ) {
+    $('#upper-case').removeClass('invalid').addClass('valid');
+} else {
+    $('#upper-case').removeClass('valid').addClass('invalid');
+}
+
+//At-least one lower-case letter
+	if ( pass.match(/[a-z]/) ) {
+    $('#lower-case').removeClass('invalid').addClass('valid');
+} else {
+    $('#lower-case').removeClass('valid').addClass('invalid');
+}
+
+//At-least one number
+	if ( pass.match(/\d/) ) {
+    $('#number').removeClass('invalid').addClass('valid');
+} else {
+    $('#number').removeClass('valid').addClass('invalid');
+}
+
+//8 or more characters
+		if ( pass.length < 8 ) {
+    $('#8OrMore').removeClass('valid').addClass('invalid');
+} else {
+    $('#8OrMore').removeClass('invalid').addClass('valid');
+}
+		if ( pass == userid) {
+    $('#sameAsID').removeClass('valid').addClass('invalid');
+} else {
+    $('#sameAsID').removeClass('invalid').addClass('valid');
+	
+}
+}).focus(function() {
+    $('#password').show();
+}).blur(function() {
+    $('#password').hide();
+});
+
+});
+
+</script>
+<style>
+#passStrengthLevel {
+    display: block;
+    height: 5px;
+    margin-bottom: 10px;
+    transition: all 0.4s ease;
+}
+
+.level0 {
+    background: none; 
+    width: 0px;
+}
+.level1 {
+    background: none repeat scroll 0 0 #FF4545;
+    width: 30px;
+}
+.level2 {
+    background: none repeat scroll 0 0 #FFC824;
+    width: 60px;
+}
+.level3 {
+        background: none repeat scroll 0 0 #6699CC;
+    width: 120px;
+}
+ 
+.level4 {
+        background: none repeat scroll 0 0 #008000;
+    width: 240px;
+}
+
+td{
+padding-bottom: 10px}
+ul, li {
+    margin:0;
+    padding:0;
+    list-style-type:none;
+}
+
+input{
+	border: 0.5px solid;
+    border-radius: 1px;
+	box-shadow: 0 2px 2px rgba(182, 182, 182, 0.75);
+}
+td{
+padding-left: 10px}
+#password::before {
+    position: absolute;
+    font-size:14px;
+    line-height:14px;
+    text-shadow:none;
+    
+}
+#password {
+    width:250px;
+    padding:15px;
+    border-radius:1px;
+    box-shadow:0 1px 3px #ccc;
+    border:1px solid;
+	display: none;
+}
+.invalid {
+    background:url(/images/cancel.png) no-repeat 0 50%;
+    padding-left:22px;
+    line-height:24px;
+    color:#ec3f41;
+}
+.valid {
+    background:url(/images/accept.png) no-repeat 0 50%;
+    padding-left:22px;
+    line-height:24px;
+    color:#3a7d34;
+}
+
+</style>
+</head>
+
+<body>
+<div class="container-full">
+	<div class="container-fluid" id="signupbox">
+<div style="padding-left: 2px;border: 0.5px solid;
+    border-radius: 1px;
+	box-shadow: 0 1px 1px rgba(182, 182, 182, 0.75); ">
+
+<h1>Registration</h1>
+</div>
+<br>
+<form name="register" id="register">
+<div style="padding-top: 10px;">
+<table>
+<tr>
+
+<td>
+<table>
+<tr>
+<td>User ID:</td>
+<td><input class="form-group" type="text" id="userid" name="userid"></td>
+</tr>
+
+<tr>
+<td>Password</td>
+<td><input class="form-group" type="password" id="pass"  name="password"></td>
+<td><div></div></td>
+</tr>
+
+<tr>
+<td>Re-enter Password</td>
+<td><input class="form-group" type="password" id="retryPass" name="retry-password"></td>
+</tr>
+
+<tr>
+<td>Email</td>
+<td><input class="form-group" id="email" type="email" name="email"></td>
+</tr>
+
+<tr>
+<td>Verify Email Address</td>
+<td><input class="form-group" type="email" name="retry-email"></td>
+</tr>
+
+<td>
+<input class="form-group" type="submit">
+</td>
+</tr>
+</table>
+</td>
+
+<td style="width:300px; vertical-align:top;">
+<div id="password">
+    <div id="passStrengthLevel" class="level0"></div>
+	<h4>Password Strength</h4>
+    <ul>
+        <li id="upper-case" class="invalid">1 upper-case letter</li>
+        <li id="lower-case" class="invalid">1 lower-case letter</li>
+        <li id="number" class="invalid">1 number</strong></li>
+        <li id="8OrMore" class="invalid">8 or more characters</li>
+        <li id="sameAsID" class="valid">Your password can not be the same as your user ID</li>
+		
+		
+    </ul>
+</div>
+</td>
+
+
+</tr>
+</table>
+</div>
+</form>
+</div>
+</div>
+</body>
+</html>
+
