@@ -12,7 +12,7 @@ var point=require('./routes/location');
 var mapPointer=require('./routes/showMap');
 var registerPointer=require('./routes/userSignup');
 var loginPointer=require('./routes/customerLogin');
-var liveSensorTrackPointer=require('./routes/liveSensorTrack');
+
 var app = express();
 
 
